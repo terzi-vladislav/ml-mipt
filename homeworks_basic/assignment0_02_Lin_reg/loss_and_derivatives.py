@@ -1,8 +1,8 @@
 import numpy as np
 
 
-class LossAndDerivatives:
-    @staticmethod
+class LossAndDerivatives: 
+    @staticmethod #TRUE
     def mse(X, Y, w):
         """
         X : numpy array of shape (`n_observations`, `n_features`)
@@ -16,7 +16,7 @@ class LossAndDerivatives:
         Comment: If Y is two-dimentional, average the error over both dimentions.
         """
 
-        return np.mean((X.dot(w) - Y)**2)
+        return np.mean((X.dot(w) - Y) ** 2)
 
     @staticmethod
     def mae(X, Y, w):
@@ -33,9 +33,9 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE    
-        return 
+        return np.mean(np.abs(X.dot(w) - Y))
 
-    @staticmethod
+    @staticmethod #TRUE
     def l2_reg(w):
         """
         w : numpy array of shape (`n_features`, `target_dimentionality`)
@@ -47,9 +47,9 @@ class LossAndDerivatives:
         """
         
         # YOUR CODE HERE
-        return 
+        return np.linalg.norm(w, 2) ** 2
 
-    @staticmethod
+    @staticmethod #TRUE
     def l1_reg(w):
         """
         w : numpy array of shape (`n_features`, `target_dimentionality`)
@@ -61,9 +61,9 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.linalg.norm(w, 1)
 
-    @staticmethod
+    @staticmethod #TRUE
     def no_reg(w):
         """
         Simply ignores the regularization
@@ -87,7 +87,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return (- 2 * X.T @ Y + 2 * X.T @ X @ w) / Y.size
 
     @staticmethod
     def mae_derivative(X, Y, w):
@@ -106,22 +106,22 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return - X.T @ np.sign(Y - X.dot(w)) / Y.size
 
-    @staticmethod
+    @staticmethod #TRUE
     def l2_reg_derivative(w):
         """
         w : numpy array of shape (`n_features`, `target_dimentionality`)
 
         Return : numpy array of shape (`n_features`, `target_dimentionality`)
 
-        Computes the L2 regularization term derivative w.r.t. the weight matrix w.
+        Computes the L2 regularization term derivative w.r.t. of the weight matrix w.
         """
 
         # YOUR CODE HERE
-        return 
-
-    @staticmethod
+        return 2 * w
+ 
+    @staticmethod #TRUE
     def l1_reg_derivative(w):
         """
         w : numpy array of shape (`n_features`, `target_dimentionality`)
@@ -132,9 +132,9 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.sign(w) 
 
-    @staticmethod
+    @staticmethod #TRUE
     def no_reg_derivative(w):
         """
         Simply ignores the derivative
