@@ -19,7 +19,7 @@ def rbf(x_1, x_2, sigma=1.):
         kernel function values for all pairs of samples from x_1 and x_2
         shaped `(#samples_1, #samples_2)`
     '''
-    distances = ### YOUR CODE HERE
+    distances = np.exp(-((x[:, np.newaxis] - y) ** 2).sum(axis=-1) / 2 / (sigma ** 2))
     return torch.Tensor(distances)
 
 def hinge_loss(scores, labels):
@@ -27,7 +27,7 @@ def hinge_loss(scores, labels):
     '''
     assert len(scores.shape) == 1
     assert len(labels.shape) == 1
-    return ### YOUR CODE HERE
+    return max(0, 1 - scores @ labels)
 
 
 class SVM(BaseEstimator, ClassifierMixin):
@@ -42,7 +42,7 @@ class SVM(BaseEstimator, ClassifierMixin):
             kernel function values for all pairs of samples from x_1 and x_2
             shaped `(#samples_1, #samples_2)`
         '''
-        return ### YOUR CODE HERE
+        return x_1 @ x_2.T
     
     def __init__(
         self,
@@ -85,7 +85,7 @@ class SVM(BaseEstimator, ClassifierMixin):
                 
                 optimizer.zero_grad()     # Manually zero the gradient buffers of the optimizer
                 
-                preds = ### YOUR CODE HERE # Compute the output by doing a forward pass
+                preds = preds.forward()   # Compute the output by doing a forward pass
                 preds = preds.flatten()
                 loss = self.lmbd * self.betas[batch_inds].T @ k_batch @ self.betas + hinge_loss(preds, y_batch)
                 loss.backward()           # Backpropagation
@@ -103,7 +103,7 @@ class SVM(BaseEstimator, ClassifierMixin):
         with torch.no_grad():
             batch = torch.from_numpy(batch).float()
             K = self.kernel_function(batch, self.X)
-            return ### YOUR CODE HERE
+            return 1 / K.T @ self.betas
 
     def predict(self, batch):
         scores = self.predict_scores(batch)
